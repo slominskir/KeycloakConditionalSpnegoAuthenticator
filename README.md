@@ -17,6 +17,8 @@ A Keycloak authenticator that allows conditional SPNEGO based on presence of `pr
 Built with Maven and Java 11.
 
 ```
+git clone https://github.com/slominskir/KeycloakConditionalSpnegoAuthenticator.git
+cd KeycloakConditionalSpnegoAuthenticator
 mvn package
 ```
 
