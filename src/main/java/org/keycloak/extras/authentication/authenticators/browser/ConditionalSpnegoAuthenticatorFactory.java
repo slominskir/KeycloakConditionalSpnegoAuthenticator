@@ -61,7 +61,7 @@ public class ConditionalSpnegoAuthenticatorFactory implements AuthenticatorFacto
 
     @Override
     public String getDisplayType() {
-        return "Kerberos";
+        return "Conditional SPNEGO";
     }
 
     @Override
