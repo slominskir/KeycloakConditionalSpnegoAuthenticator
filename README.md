@@ -1,5 +1,5 @@
 # KeycloakConditionalSpnegoAuthenticator
-A Keycloak authenticator that allows Conditional SPNEGO based on presence of `prompt=login`.
+A Keycloak authenticator that allows conditional SPNEGO based on presence of `prompt=login`.
 
 ## Install
 1. Obtain the plugin jar file by either downloading it from the [releases](https://github.com/slominskir/KeycloakConditionalSpnegoAuthenticator/releases) page, or [building](https://github.com/slominskir/KeycloakConditionalSpnegoAuthenticator#build) it yourself.
