@@ -28,12 +28,20 @@ public class ConditionalSpnegoAuthenticator extends SpnegoAuthenticator {
         String patternStr = config.get(WHITELIST_PATTERN);
         String xForwardedFor = context.getHttpRequest().getHttpHeaders().getRequestHeaders().getFirst("X-Forwarded-For");
 
-        if(!patternStr.isEmpty() || xForwardedFor != null && !xForwardedFor.isEmpty()) {
+        if(!patternStr.isBlank()) {
             logger.debug("Matcher pattern: " + patternStr + " ,xForwardedFor: " + xForwardedFor);
-            Pattern pattern = Pattern.compile(patternStr, Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 
-            if(!pattern.matcher(xForwardedFor).matches()) {
-                logger.debug("Skip SPNEGO because X-Forwarded-For does not match configured pattern");
+            if(xForwardedFor != null && !xForwardedFor.isBlank()) {
+                Pattern pattern = Pattern.compile(patternStr, Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+
+                if (!pattern.matcher(xForwardedFor).matches()) {
+                    logger.debug("Skip SPNEGO because X-Forwarded-For does not match configured pattern");
+                    context.attempted();
+                    return;
+                }
+            } else {
+                logger.debug("Skip SPNEGO because whitelist pattern defined, but no X-Forwarded-For set");
+
                 context.attempted();
                 return;
             }

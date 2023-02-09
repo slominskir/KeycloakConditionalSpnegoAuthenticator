@@ -78,7 +78,7 @@ public class ConditionalSpnegoAuthenticatorFactory implements AuthenticatorFacto
         ProviderConfigProperty whitelistPattern = new ProviderConfigProperty();
         whitelistPattern.setType(STRING_TYPE);
         whitelistPattern.setName(WHITELIST_PATTERN);
-        whitelistPattern.setLabel("X-Forwarded-For Whitelist Regex Pattern");
+        whitelistPattern.setLabel("Whitelist Regex Pattern");
         whitelistPattern.setHelpText("Whitelist Regex pattern to match against X-Forwarded-For HTTP header.  If pattern is empty SPNEGO is allowed, else only hosts matching the pattern have SPNEGO attempted.");
         whitelistPattern.setDefaultValue("");
 
@@ -87,6 +87,6 @@ public class ConditionalSpnegoAuthenticatorFactory implements AuthenticatorFacto
 
     @Override
     public boolean isUserSetupAllowed() {
-        return true;
+        return false;
     }    
 }
