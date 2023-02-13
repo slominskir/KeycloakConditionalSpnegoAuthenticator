@@ -1,5 +1,5 @@
 # KeycloakConditionalSpnegoAuthenticator
-A Keycloak authenticator that allows conditional SPNEGO based on presence of `prompt=login`.  Tested with Keycloak 19.0.2.  See: https://github.com/keycloak/keycloak/issues/8989.
+A Keycloak authenticator that allows conditional SPNEGO based on presence of `prompt=login` or optionally by IP pattern matching of `X-Forwarded-For`.  See: https://github.com/keycloak/keycloak/issues/8989.
 
 ## Overview
 It is often desirable to treat Intranet (internal) users with the convenience of Kerberos Single Sign On, while preventing Internet (external) users from possibly seeing a confusing NTLM prompt dialog.  The often undesirable prompt occurs because Kerberos is only available bundled with SPNEGO (www-authenticate: Negotiate), which has an implicit fallback on NTLM, which is honored in a browser specific way with [differing default behaviors](https://github.com/keycloak/keycloak/issues/16981).
