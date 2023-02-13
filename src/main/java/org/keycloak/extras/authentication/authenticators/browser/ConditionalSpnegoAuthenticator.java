@@ -32,9 +32,7 @@ public class ConditionalSpnegoAuthenticator extends SpnegoAuthenticator {
             logger.debug("Matcher pattern: " + patternStr + " ,xForwardedFor: " + xForwardedFor);
 
             if(xForwardedFor != null && !xForwardedFor.isBlank()) {
-                Pattern pattern = Pattern.compile(patternStr, Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-
-                if (!pattern.matcher(xForwardedFor).matches()) {
+                if (!inWhitelist(patternStr, xForwardedFor)) {
                     logger.debug("Skip SPNEGO because X-Forwarded-For does not match configured pattern");
                     context.attempted();
                     return;
@@ -48,5 +46,11 @@ public class ConditionalSpnegoAuthenticator extends SpnegoAuthenticator {
         }
 
         super.authenticate(context);
+    }
+
+    public boolean inWhitelist(String patternStr, String xForwardedFor) {
+        Pattern pattern = Pattern.compile(patternStr);
+
+        return pattern.matcher(xForwardedFor).matches();
     }
 }
