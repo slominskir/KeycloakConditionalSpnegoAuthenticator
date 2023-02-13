@@ -22,6 +22,8 @@ This Keycloak authenticator allows SPNEGO authentication to be skipped by explic
 5. Re-order the new execution to where the old "Kerberos one was in the list
 6. Optionally edit the ProviderConfigProperty `Whitelist Regex Pattern`
 
+**Note**: [here](https://github.com/JeffersonLab/smoothness/blob/main/bash/keycloak/spnego-flow-setup.sh) is a bash script that automates this.
+
 ## Build
 Built with Maven and Java 11.
 
