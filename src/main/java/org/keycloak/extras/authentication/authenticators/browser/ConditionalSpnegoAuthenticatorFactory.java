@@ -1,5 +1,6 @@
 package org.keycloak.extras.authentication.authenticators.browser;
 
+import java.util.Arrays;
 import java.util.List;
 import org.keycloak.Config;
 import org.keycloak.authentication.Authenticator;
@@ -9,6 +10,9 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.models.UserCredentialModel;
 import org.keycloak.provider.ProviderConfigProperty;
+
+import static org.keycloak.extras.authentication.authenticators.browser.ConditionalSpnegoAuthenticator.WHITELIST_PATTERN;
+import static org.keycloak.provider.ProviderConfigProperty.STRING_TYPE;
 
 public class ConditionalSpnegoAuthenticatorFactory implements AuthenticatorFactory {
     public static final String PROVIDER_ID = "conditional-auth-spnego";
@@ -46,7 +50,7 @@ public class ConditionalSpnegoAuthenticatorFactory implements AuthenticatorFacto
 
     @Override
     public boolean isConfigurable() {
-        return false;
+        return true;
     }
 
     public static final AuthenticationExecutionModel.Requirement[] REQUIREMENT_CHOICES = {
@@ -66,12 +70,19 @@ public class ConditionalSpnegoAuthenticatorFactory implements AuthenticatorFacto
 
     @Override
     public String getHelpText() {
-        return "Conditionally attempt SPNEGO based on existence of prompt=login";
+        return "Conditionally attempt SPNEGO based on existence of prompt=login and optionally a configured whitelist regex pattern to match against the first X-Forwarded-For";
     }
 
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
-        return null;
+        ProviderConfigProperty whitelistPattern = new ProviderConfigProperty();
+        whitelistPattern.setType(STRING_TYPE);
+        whitelistPattern.setName(WHITELIST_PATTERN);
+        whitelistPattern.setLabel("Whitelist Regex Pattern");
+        whitelistPattern.setHelpText("Whitelist Regex pattern to match against X-Forwarded-For HTTP header.  If pattern is empty SPNEGO is allowed, else only hosts matching the pattern have SPNEGO attempted.");
+        whitelistPattern.setDefaultValue("");
+
+        return Arrays.asList(whitelistPattern);
     }
 
     @Override
