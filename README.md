@@ -25,7 +25,7 @@ This Keycloak authenticator allows SPNEGO authentication to be skipped by explic
 **Note**: [here](https://github.com/JeffersonLab/smoothness/blob/main/bash/keycloak/spnego-flow-setup.sh) is a bash script that automates this.
 
 ## Build
-Built with Maven and Java 11.
+Built with Maven and Java.  Java version depends on plugin version as Keycloak required JDK 11 up until release 22 and then required JDK 17 afterwards.  See Releases.
 
 ```
 git clone https://github.com/slominskir/KeycloakConditionalSpnegoAuthenticator.git
